@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@5"></script>
+    <title></title>
+
+    <style>
+
+        h1 {
+            font-style: normal;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: .75em;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<table>
+    <thread>
+        <tr>
+            <th colspan="1"><div id="vis1"></div></th>
+            <th colspan="1"><h1 style = font-family:georgia,garamond,serif;><u>2020 Population Density</u></h1><h2>To provide estimates of population density for the year 2020,
+                based on counts consistent with national censuses and population registers, as raster data to facilitate data integration.
+            <br>Population density data for raster used from NASA's <a href = "https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-density-rev11/data-download">Socioeconomic Data and Applications Center(SEDAC)</a>
+            <br><br>Data consists of estimates of human population density (number of persons per square kilometer) based on counts consistent with national censuses and population registers for the year 2020.
+                A proportional allocation gridding algorithm, utilizing approximately 13.5 million national and sub-national administrative units, was used to assign population counts to 30 arc-second grid cells.
+                The population density rasters were created by dividing the population count raster for a given target year by the land area raster.
+                <br>Higher population density can be seen in large metropolitan areas.
+            </h2>
+
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></h1></th>
+        </tr>
+    </thread>
+    <tr>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+<script>
+    const spec1 = "newRaster.vg.json";
+    vega.scheme('GREENISH', ['#F3E8EE', '#BACDB0', '#729B79', '#475B63', '#2E2C2F']);
+    vega.scheme('PURPLEISH', ['#815E5B', '#685155', '#7A6F9B', '#8B85C1', '#D4CDF4']);
+    vega.scheme('purpleorange', ['#5614C8', '#601AB8', '#6B20A7', '#752697', '#802C87','#8A3276','#953866','#9F3E55','#AA4445','#B44A35','#BF5024','#C95614']);
+    vega.scheme('purplesteporange', ['#5614C8', '#4938B1', '#3C5C9A', '#2E8084', '#21A46D','#14C856','#38B149','#559F3E','#728D34','#8F7A29','#AC681F','#C95614']);
+    vega.scheme('steps', ['#5614C8', '#753ADA', '#935FED', '#B285FF', '#14C856','#3BDA75','#62ED95','#89FFB4','#C95614','#DB7439','#ED935F','#FFB184']);
+    vega.scheme('bluered', ['#f0ead2','#dde5b6','#adc178', '#005F73', '#0A9396', '#94D2BD', '#E9D8A6','#EE9B00','#CA6702','#BB3E03','#AE2012','#9B2226']);
+
+
+
+
+
+
+    vegaEmbed("#vis1", spec1)
+        // result.view provides access to the Vega View API
+        .then(result => console.log(result))
+        .catch(console.warn);
+</script>
+
+<script>
+    const spec2 = "testRaster.vg.json";
+
+    vegaEmbed("#vis2", spec2)
+        // result.view provides access to the Vega View API
+        .then(result => console.log(result))
+        .catch(console.warn);
+</script>
+
+<p><a href="index.html">Back</a></p>
+<p><a href="https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-density-rev11/data-download">2020 Population</a></p>
+
+</body>
+</html>

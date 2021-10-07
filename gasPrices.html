@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@5"></script>
+    <title></title>
+
+</head>
+
+<body>
+
+<table style=width:100%>
+    <thread>
+        <td>
+        <th colspan="1"><small><tt>
+            A1: Weekly U.S. All Grades All Formulations Retail Gasoline Prices (Dollars per Gallon)<br>
+            A2: Weekly U.S. All Grades Conventional Retail Gasoline Prices (Dollars per Gallon)<br>
+            A3: Weekly U.S. All Grades Reformulated Retail Gasoline Prices (Dollars per Gallon)<br>
+            R1: Weekly U.S. Regular All Formulations Retail Gasoline Prices (Dollars per Gallon)<br>
+            R2: Weekly U.S. Regular Conventional Retail Gasoline Prices (Dollars per Gallon)<br>
+            R3: Weekly U.S. Regular Reformulated Retail Gasoline Prices (Dollars per Gallon)<br>
+        </tt>
+        </small>
+        </th>
+        <th colspan="2"><small><tt>
+            M1: Weekly U.S. Midgrade All Formulations Retail Gasoline Prices (Dollars per Gallon)<br>
+            M2: Weekly U.S. Midgrade Conventional Retail Gasoline Prices (Dollars per Gallon)<br>
+            M3: Weekly U.S. Midgrade Reformulated Retail Gasoline Prices (Dollars per Gallon)<br>
+            P1: Weekly U.S. Premium All Formulations Retail Gasoline Prices (Dollars per Gallon)<br>
+            P2: Weekly U.S. Premium Conventional Retail Gasoline Prices (Dollars per Gallon)<br>
+            P3: Weekly U.S. Premium Reformulated Retail Gasoline Prices (Dollars per Gallon)<br>
+        </tt></small>
+        </th>
+        </td>
+    </thread>
+</table>
+
+<br><br>
+<table style=width:100%>
+    <thread>
+        <tr>
+            <th colspan="2">U.S. Gasoline Retail Prices</th>
+        </tr>
+    </thread>
+    <tr>
+        <td><div style=display:block id="vis2"></div></td>
+    </tr>
+</table>
+<br><br>
+<table>
+    <thread>
+        <tr>
+            <th colspan="1">Average Annual Consumer Price Index(CPI) for Gasoline</th>
+            <th colspan="2">Annual Crude Oil Price by Barrel(42 gallons)</th>
+        </tr>
+    </thread>
+    <tr>
+        <td><div id="vis3"></div></td>
+        <td><div id="vis4"></div></td>
+    </tr>
+</table>
+
+
+<script>
+    const spec = "newGraph.vg.json";
+
+    vegaEmbed("#vis2", spec)
+        // result.view provides access to the Vega View API
+        .then(result => console.log(result))
+        .catch(console.warn);
+</script>
+<script>
+    const spec2 = "newHist.vg.json";
+    vegaEmbed("#vis3", spec2)
+        // result.view provides access to the Vega View API
+        .then(result => console.log(result))
+        .catch(console.warn);
+
+</script>
+<script>
+    const spec3 = "newBrent.vg.json";
+    vegaEmbed("#vis4", spec3)
+        // result.view provides access to the Vega View API
+        .then(result => console.log(result))
+        .catch(console.warn);
+
+</script>
+
+
+
+
+
+<br><br><br>
+<a href="https://www.kaggle.com/mruanova/us-gasoline-and-diesel-retail-prices-19952021">(1)U.S. Gasoline and Diesel Retail Prices 1995-2021 ,</a>
+<a href="https://datahub.io/core/oil-prices#resource-brent-annual">(2)Brent and WTI Spot Prices ,</a>
+<a href="https://www.usinflationcalculator.com/gasoline-prices-adjusted-for-inflation/">(3)Gasoline Prices Adjusted for Inflation</a>
+<p><a href="index.html">Back</a></p>
+</body>

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Gas Prices from 1995-2020",
+  "width": "container",
+  "height": 400,
+  "padding": 5,
+  "data": {
+    "name": "gas_prices",
+    "url": "data/testInfo.csv",
+    "format": {"type": "csv", "parse": {"A1": "number", "date": "date"}}
+  },
+
+
+
+  "repeat": {
+    "layer": ["A1","A2","A3","R1","R2","R3","M1","M2","M3","P1","P2","P3"]
+  },
+
+
+  "spec": {
+    "mark": "circle",
+
+    "encoding": {
+      "x": {
+        "timeUnit": "yearmonth",
+        "title": "Date",
+        "field": "date"
+      },
+      "y": {
+        "field": {"repeat":"layer"},
+        "title": "Gas Prices($)",
+        "type": "quantitative"
+      },
+      "color": {
+        "datum": {"repeat": "layer"},
+        "type": "nominal",
+        "scale": {"scheme": "turbo"},
+        "sort": "descending"
+      },
+
+      "tooltip": [
+        {"field": "A1","type": "quantitative"},
+        {"field": "A2","type": "quantitative"},
+        {"field": "A3","type": "quantitative"},
+        {"field": "R1","type": "quantitative"},
+        {"field": "R2","type": "quantitative"},
+        {"field": "R3","type": "quantitative"},
+        {"field": "M1","type": "quantitative"},
+        {"field": "M2","type": "quantitative"},
+        {"field": "M3","type": "quantitative"},
+        {"field": "P1","type": "quantitative"},
+        {"field": "P2","type": "quantitative"},
+        {"field": "P3","type": "quantitative"},
+        {"field": "date","timeUnit": "utcyearmonthdate"}
+        ]
+
+      }
+
+
+
+
+  }
+
+}
+
