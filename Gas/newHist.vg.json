@@ -1,0 +1,29 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 645,
+  "height": 300,
+  "padding": 5,
+  "data": {
+    "name": "gas_CPI",
+    "url": "data/CPI.csv",
+    "format": {"type": "csv", "parse": {"CPI": "number", "date": "date"}}
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "timeUnit": "year",
+      "title": "Date",
+      "field": "date",
+      "type": "nominal"
+    },
+    "y": {
+      "title": "Average Annual CPI (%)",
+      "aggregate":"average",
+      "field":"CPI"
+    },
+    "color": {
+      "field": "CPI","type": "ordinal","legend": null, "scale": {"scheme": "redyellowgreen"}, "sort": "descending"
+    },
+    "tooltip": {"field": "CPI","type": "quantitative"}
+  }
+}

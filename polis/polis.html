@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <title>Polis Data</title>
+</head>
+<body>
+<center>
+    <h style="font-size:30px">Do all roads lead to
+        <h style="color:red">civil war?</h>
+        <tb>
+            <tb></tb>
+        </tb>
+    </h>
+</center>
+
+
+</body>
+
+<div id="geographic"></div>
+<script>
+    vega.scheme('coolors', ['#05f8f1', '#0277f6', '#5a04f6', '#9f05f8', '#6c0082']);
+    const spec_polis = "polisMap.vg.json";
+    vegaEmbed("#geographic", spec_polis)
+        .then(result => console.log(result))
+        .catch(console.warn);
+
+</script>
+<script>
+    const compare = "compare.vg.json";
+    vegaEmbed("#news", compare)
+        .then(result => console.log(result))
+        .catch(console.warn)
+</script>
+
+<table>
+    <thread>
+        <tr>
+            <th colspan="1">
+            <td>
+                <div id="news"></div>
+            </td>
+            <td><h5 style="font-size:20px"><h style="color:#930000">A Road of Opposition:</h></h5>
+                <h5>
+                We all know the saying, "All roads lead to Rome", but can the same be said
+                for Greek poleis and their civil wars known as staseis? The maps above display the Mediterranean and
+                Aegean maps overlaid with known
+                <a href="https://projectmercury.eu/datasets/#orbis">ancient Roman Routes.</a>
+                Colored dots represent poleis that have experienced staseis, gray dots represent poleis that have not
+                gone through civil unrest. The bar graph on the left represents the average number of routes passing
+                through the poleis area per staseis. From both the maps and the bar graph we can see a pattern. The
+                number of staseis for per poleis appears to increase in regards to the number of routes that go
+                through/near the polis. But what could this possibly mean? Perhaps it means that staseis is directly
+                related to the flow of information about the possible political climate through shipping routes and
+                roads.
+                    </h5>
+                <h5 style="font-size:20px"><h style="color:#930000">Conciseness of route data:</h></h5>
+                <h5>
+                The data presented to you in the histogram may not be the most accurate and would be best considered a
+                rough estimate. There are 1870 poleis with roughly 140 of those having any staseis. This hypothesis
+                required manually going through the polis and counting the number of routes that went through the same
+                area. Human error should be noted when examining the data presented before you.</h5>
+            </td>
+            </th>
+        </tr>
+    </thread>
+</table>
+
+<p><a href="../index.html">Back</a></p>
+
+
+</html>

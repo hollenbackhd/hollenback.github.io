@@ -1,0 +1,29 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 645,
+  "height": 300,
+  "padding": 5,
+  "data": {
+    "name": "brent_price",
+    "url": "data/brent_annual.csv",
+    "format": {"type": "csv", "parse": {"price": "number", "date": "date"}}
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "timeUnit": "year",
+      "title": "Date",
+      "field": "date",
+      "type": "nominal"
+    },
+    "y": {
+      "title": "Annual Price($) Per Barrel",
+      "aggregate":"average",
+      "field":"price"
+    },
+    "color": {
+      "field": "price","type": "ordinal","legend": null, "scale": {"scheme": "redyellowgreen"}, "sort": "descending"
+    },
+    "tooltip": {"field": "price","type": "quantitative"}
+  }
+}

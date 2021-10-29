@@ -1,0 +1,302 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Polis VS Staseis.",
+  "autosize": "pad",
+
+
+  "signals": [
+    { "name": "mapWidth", "value": 705},
+    { "name": "mapHeight", "value": 450},
+    { "name": "projScale", "value": 45},
+    { "name": "projTranslate", "update": "[mapWidth / 2, mapHeight / 2]" },
+
+    {
+      "name": "hover",
+      "value": null,
+      "on": [
+        {"events": "symbol:mouseover","update": "datum.properties.Name"},
+        {"events": "symbol:mouseout","update": "null"}
+      ]
+    },
+    {
+      "name": "title",
+      "value": "Please display",
+      "update": "hover ? hover.Name + ' (' + hover.iata + ')' : 'Please display'"
+    },
+    {
+      "name": "scale", "value": 1200,
+      "bind": {"input": "range", "min": 500, "max": 3000}
+    }
+  ],
+
+  "data": [
+    {
+      "name": "projections",
+      "values": [
+        {"type":"mercator","scale":1100,"center":[30,36], "label": "Mediterranean"},
+        {"type":"mercator","scale":2100,"center":[26,37], "label": "Aegean"}
+      ],
+      "scale": {"signal": "scale"}
+
+    },
+    {
+      "name": "world",
+      "url": "data/earth-coastlines-500m.geo.json"
+    },
+    {
+      "name": "graticule",
+      "transform": [
+        { "type": "graticule" }
+      ]
+    },
+    {
+      "name": "sphere",
+      "values": [{"type": "Sphere"}]
+    },
+    {
+      "name": "labelOffsets",
+      "values": [
+        {"dx": -1, "dy": -1},
+        {"dx": -1, "dy": 1},
+        {"dx": 1, "dy": -1},
+        {"dx": 1, "dy": 1}
+      ]
+    },
+    {
+      "name": "polis",
+      "url": "data/polis.json",
+      "format": {
+        "type": "json",
+        "property": "features"
+      },
+      "transform": [{"type": "filter","expr": "datum.properties.staseis>0"}]
+    },
+    {
+      "name": "noStaseis",
+      "url": "data/polis.json",
+      "format": {
+        "type": "json",
+        "property": "features"
+      },
+      "transform": [{"type": "filter","expr": "datum.properties.staseis==0"}]
+    },
+    {
+      "name": "routes",
+      "url": "data/base_routes.geojson"
+    }
+  ],
+
+  "layout": {
+    "columns": 2,
+    "padding": 10
+  },
+  "scales": [
+    {
+      "name": "color",
+      "type": "quantize",
+      "domain": [0,20],
+      "range": {"scheme": "coolors","count": 5,"step": 1},
+      "align": 0
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "from": {"data": "projections"},
+
+      "signals": [
+        {"name": "width", "update": "mapWidth"},
+        {"name": "height", "update": "mapHeight"}
+      ],
+
+      "encode": {
+        "enter": {
+          "width": {"signal": "mapWidth"},
+          "height": {"signal": "mapHeight"},
+          "clip": {"value": true}
+        }
+      },
+
+      "projections": [
+        {
+          "name": "projection",
+          "type": {"signal": "parent.type"},
+          "scale": {"signal": "scale"},
+          "center": {"signal": "parent.center"}
+        }
+      ],
+
+      "marks": [
+
+        {
+          "type": "shape",
+          "from": {"data": "sphere"},
+          "encode": {
+            "enter": {
+              "fill": {"value": "aliceblue"}
+            }
+          },
+          "transform": [
+            { "type": "geoshape", "projection": "projection" }
+          ]
+        },
+        {
+          "type": "shape",
+          "from": {"data": "world"},
+          "clip": {"sphere": "projection"},
+          "encode": {
+            "enter": {
+              "strokeWidth": {"value": 0.25},
+              "stroke": {"value": "#888"},
+              "fill": {"value": "#B1D8B7"}
+            }
+          },
+          "transform": [
+            { "type": "geoshape", "projection": "projection" }
+          ]
+        },
+        {
+          "type": "shape",
+          "from": {"data": "routes"},
+          "clip": {"sphere": "projection"},
+          "encode": {
+            "enter": {
+              "strokeWidth": {"value": 0.4},
+              "stroke": {"value": "brown"}
+            }
+          },
+          "transform": [
+            { "type": "geoshape", "projection": "projection" }
+          ]
+        },
+
+
+
+        {
+          "type": "shape",
+          "from": {"data": "graticule"},
+          "clip": {"sphere": "projection"},
+          "interactive": false,
+          "encode": {
+            "enter": {
+              "strokeWidth": {"value": 1},
+              "stroke": {"value": "#ddd"}
+            }
+          },
+          "transform": [
+            { "type": "geoshape", "projection": "projection" }
+          ]
+        },
+        {
+          "type": "shape",
+          "from": {"data": "polis"},
+          "encode": {
+            "update": {
+              "opacity": {"value": 2.0},
+              "fill": {"scale": "color", "field": "properties.staseis"}
+            }
+          },
+          "transform": [
+            {
+              "type": "geoshape",
+              "projection": "projection",
+              "pointRadius": 3
+            }
+          ]
+        },
+        {
+          "type": "shape",
+          "from": {"data": "noStaseis"},
+          "encode": {
+            "enter": {
+              "size": {"value": 1},
+              "fill": {"value": "#A4A4A4"},
+              "fillOpacity": {"value": 2.0}
+
+
+            }
+          },
+          "transform": [
+            {
+              "type": "geoshape",
+              "projection": "projection",
+              "pointRadius": 1
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "from": {"data": "labelOffsets"},
+          "encode": {
+            "enter": {
+              "fill": {"value": "white"},
+              "dx": {"field": "dx"},
+              "dy": {"field": "dy"},
+              "x": {"value": 5},
+              "y": {"signal": "mapHeight - 5"},
+              "baseline": {"value": "bottom"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
+              "text": {"signal": "parent.label"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "fill": {"value": "black"},
+              "x": {"value": 5},
+              "y": {"signal": "mapHeight - 5"},
+              "baseline": {"value": "bottom"},
+              "fontSize": {"value": 14},
+              "fontWeight": {"value": "bold"},
+              "text": {"signal": "parent.label"}
+            }
+          }
+        },
+
+        {
+          "type": "text",
+          "interactive": false,
+          "encode": {
+            "enter": {
+              "x": {"signal": "width","offset":  -5},
+              "y": {"value":0 },
+              "fill": {"value": "black"},
+              "fontsize": {"value": 20},
+              "align": {"value": "right"}
+            },
+            "update": {
+              "text": {"signal": "title"}
+            }
+          }
+        }
+
+      ]
+    }
+  ],
+
+  "legends": [
+    {
+      "title": "Staseis",
+      "fill": "color",
+      "orient": "bottom",
+      "offset": 5,
+      "type": "gradient",
+      "gradientLength": 300,
+      "gradientThickness": 12,
+      "titlePadding": 10,
+      "titleOrient": "left",
+      "titleAnchor": "end",
+      "direction": "horizontal"
+    }
+
+  ],
+
+
+  "config": {
+    "legend": {"layout": {"anchor": "middle"}}
+  }
+}
