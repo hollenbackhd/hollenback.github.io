@@ -34,7 +34,7 @@
       "name": "projections",
       "values": [
         {"type":"mercator","scale":1100,"center":[30,36], "label": "Mediterranean"},
-        {"type":"mercator","scale":2100,"center":[26,37], "label": "Aegean"}
+        {"type":"mercator","scale":4100,"center":[26,37], "label": "Aegean"}
       ],
       "scale": {"signal": "scale"}
 
